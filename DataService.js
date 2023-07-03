@@ -371,7 +371,7 @@ const data = [{
 
 class DataService {
 
-    count() {
+    returnDataWithCountNumber() {
         return data.map(value => {
             return {
                 name: value.name + "[" + value.people.length + "]",
@@ -386,22 +386,30 @@ class DataService {
         });
     }
 
-    filter(filterValue) {
-        return data.map(value => {
-            if (value.people.some(peopleElement => peopleElement.animals.some(animal => animal.name.includes(filterValue)))) {
+    filterCountryHavingAnimal(animalPartialName) {
+        return data.map(country => {
+            if (this.countryHaveFilteredAnimal(country, animalPartialName)) {
                 return {
-                    ...value,
-                    people: value.people.map(peopleElement => {
-                        if(peopleElement.animals.some(animal => animal.name.includes(filterValue))) {
+                    ...country,
+                    people: country.people.map(peopleElement => {
+                        if(this.peopleHaveFilteredAnimal(peopleElement, animalPartialName)) {
                             return {
                                 name: peopleElement.name,
-                                animals: peopleElement.animals.filter(animal => animal.name.includes(filterValue))
+                                animals: peopleElement.animals.filter(animal => animal.name.includes(animalPartialName))
                             }
                         }
                     }).filter(peopleElement => this.notNullNorUndefined(peopleElement))
                 };
             }
         }).filter(value => this.notNullNorUndefined(value));
+    }
+
+    peopleHaveFilteredAnimal(peopleElement, animalPartialName) {
+        return peopleElement.animals.some(animal => animal.name.includes(animalPartialName));
+    }
+
+    countryHaveFilteredAnimal(value, filterValue) {
+        return value.people.some(peopleElement => peopleElement.animals.some(animal => animal.name.includes(filterValue)));
     }
 
     notNullNorUndefined(peopleElement) {
