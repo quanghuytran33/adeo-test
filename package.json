@@ -1,0 +1,15 @@
+{
+  "name": "adeo-test",
+  "version": "1.0.0",
+  "dependencies": {
+    "arg": "^5.0.2",
+    "inquirer": "^9.2.7",
+    "mocha": "^10.2.0",
+    "save-dev": "^0.0.1-security"
+  },
+  "scripts": {
+    "test": "mocha test/*.js"
+  },
+  "test": "mocha",
+  "type": "module"
+}
